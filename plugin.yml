@@ -1,0 +1,15 @@
+name: RealTree
+main: us.bangrocket.realtree.RealTree
+version: 0.5
+commands:
+    realtree:
+        description: Description
+        usage: /<command> test
+        aliases:
+        - rt
+    livingforest:
+        description: Supported commands from defunct LivingForest plugins
+        usage: /<command> test
+        aliases:
+        - lf
+        
