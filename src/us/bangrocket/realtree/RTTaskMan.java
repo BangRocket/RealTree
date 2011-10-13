@@ -43,7 +43,9 @@ public class RTTaskMan
 				
 					if (!(plugin.getReplant().isEmpty()))
 					{
-						while (!(plugin.getReplant().isEmpty())){
+						while (!(plugin.getReplant().isEmpty()))
+						{
+								
 							//consider adding a delay in this function by adding a wait(random)
 							BlockState originalState = plugin.getReplant().pop();
 							
@@ -95,6 +97,13 @@ public class RTTaskMan
 				public void run()
 				{	    										
 					plugin.output("Block replant end " + plugin.getXYZ(block));
+					
+					
+					//DEBUGGERY
+					
+					plugin.RTOG.cuboidtest(block);
+											
+					//DEBUGGERY
 					
 					if((block.getType().equals(Material.AIR)) || (block.getType().equals(Material.FIRE))) //just incase it was on fire
 					{ 

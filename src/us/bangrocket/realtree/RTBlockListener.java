@@ -33,7 +33,9 @@ public class RTBlockListener extends BlockListener{
     			//kick out of the loop unless we've got access to work in creative mode
         		if ((player.getGameMode().equals(GameMode.CREATIVE)) && !(plugin.getConfig().getcreativeMode()))
         		{
-        			return;
+        			//DEBUGGERY
+        			//return;
+        			//DEBUGGERY
         		}
         		
 				//block is broken! Now lets see if this block was on a piece of dirt...
@@ -59,7 +61,7 @@ public class RTBlockListener extends BlockListener{
     						plugin.getTaskMan().startProtectTask(block);
     					}
     					
-    					if(plugin.getConfig().isTelluser())
+    					if(plugin.getConfig().isTellUserPlanted())
     					{
     						plugin.output(plugin.getConfig().getTellUserPlanted(), player, ChatColor.GREEN);
     					}

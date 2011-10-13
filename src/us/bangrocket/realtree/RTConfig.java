@@ -27,7 +27,7 @@ public class RTConfig
 	
 	private boolean RTEnabled = true;
 	
-	private boolean tellUser = false;
+	private boolean tellUserPlanted = false;
 	private boolean tellUserProtected = true;
 	private boolean replantOnBurn = true;
 	private boolean protectSaplings =  true;
@@ -116,7 +116,7 @@ public class RTConfig
 		
 		plugin.output("Loading configuration from a RealTree config.yml");	
 		
-		tellUser = config.getBoolean("Tell_User_Planting", tellUser);
+		tellUserPlanted = config.getBoolean("Tell_User_Planting", tellUserPlanted);
 		tellUserProtected = config.getBoolean("Tell_User_Protected", tellUserProtected);
 		
 		replantOnBurn = config.getBoolean("Replant_Burned_Tree", replantOnBurn);
@@ -139,7 +139,7 @@ public class RTConfig
 		
 		plugin.output("Loading configuration from a LivingTree v12 config.yml");
 		
-		tellUser = config.getBoolean("Living.Replant.TellUserPlanting", tellUser);
+		tellUserPlanted = config.getBoolean("Living.Replant.TellUserPlanting", tellUserPlanted);
 		tellUserProtected = config.getBoolean("Living.Replant.TellUserProtected", tellUserProtected);
 		
 		replantOnBurn = config.getBoolean("Living.Replant.ReplantBurnedTree", replantOnBurn);
@@ -191,15 +191,15 @@ public class RTConfig
 	}
 
 	//returns if users should be informed of saplings being planted
-	public boolean isTelluser()
+	public boolean isTellUserPlanted()
 	{
-		return tellUser;
+		return tellUserPlanted;
 	}
 	
 	//sets if users should be informed of saplings being planted
-	public void setTelluser(boolean telluser)
+	public void setTellUserPlanted(boolean telluser)
 	{
-		tellUser = telluser;
+		tellUserPlanted = telluser;
 	}
   
 	//sets the delay time between chop and sapling plant

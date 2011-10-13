@@ -20,6 +20,8 @@ public class RealTree extends JavaPlugin{
 	// emulating the LivingForest functionality, but this was a pretty solid base to begin from. Places where I've deviated
 	// from his code will be marked in comments.
 	
+	
+
 	Logger _log = Logger.getLogger("Minecraft");
 	
 	PluginDescriptionFile pdfFile;
@@ -30,6 +32,7 @@ public class RealTree extends JavaPlugin{
 	private RTBlockListener _blockListener = new RTBlockListener(this);
 	//private RTPlayerListener _playerListener = new RTPlayerListener(this); //Don't think I need this anymore.
 	private RTFastgrow _fgListener = new RTFastgrow(this);
+	public RTOvergrow RTOG = new RTOvergrow(this);
 	
 	private RTCommand _commander = new RTCommand(this);
 	private RTTaskMan _taskman = new RTTaskMan(this);
@@ -67,11 +70,12 @@ public class RealTree extends JavaPlugin{
 		//Player registers
 		//pm.registerEvent(Event.Type.PLAYER_INTERACT, this._playerListener, Event.Priority.High, this);
 
+		//TODO: Future Implementation of cycle growth
 		//TODO: Check to make sure that only one plant type is going at once.
-		if (_config.getcycleReplant())
-		{
-			_taskman.startCycleReplantTask();
-		}
+		//if (_config.getcycleReplant())
+		//{
+		//	_taskman.startCycleReplantTask();
+		//}
 		
 		this.output("version " + pdfFile.getVersion() + " has been loaded.");
 		
@@ -80,10 +84,10 @@ public class RealTree extends JavaPlugin{
 	public void onDisable()
 	{ 
 		
-		if (_config.getcycleReplant())
-		{
-			_taskman.stopCycleReplantTask();
-		}
+		//if (_config.getcycleReplant())
+		//{
+		//	_taskman.stopCycleReplantTask();
+		//}
 		
 		this.output("version " + pdfFile.getVersion() + " has been unloaded.");
 	}

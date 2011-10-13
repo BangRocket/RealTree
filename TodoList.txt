@@ -16,33 +16,30 @@ x Port over LF commands
 x Check for creative mode, add toggle for it. (Disabled by default) (Check for server and then player gamemode)
 x Strip config read/write into own separate class
 x Write code to read/use LF's users.yml file
-x Implement FastGrow (toggle)
-x Give FG permissions
-x Create simple format for configuration options
-x Notify player when op has changed their RT settings
-x Implement user.yml checks
 
+/ Create simple format for configuration options
 / Write console/commands with mind to how the LF commands are set up
-/ Create RT-specific permissions
+/ Implement FastGrow (toggle)
+/ Implement user.yml checks
+
+* Give FG permissions
+* Notify player when op has changed their RT settings
+* Create RT-specific permissions
+* Examine and verify functionality of over-growth feature, implement it 
 
 * Implement non-permission user file (Basically, you're going to create a separate yml (or dat?) file to act
 	as a "fake" BukkitPermissions plugin. It will act a little like the users.yml, except it will essentally
 	track any player that joins (probably give this functionality back to users.yml) and assign them the 
 	predefined RT Permissions. Then I'll just write another function for checking in Perms and be done with
 	the whole damn thing.)
-	
-* Examine and verify functionality of over-growth feature, implement it 
-
 
 
 Future Version TODO LIST
-* Implement ChopLog (toggle)
-* see if you can add BigTree to your codebase.
 * Add a debug mode with a bunch of output information.
+* Implement ChopLog (toggle)
+* Change start/stop task into a "feature" have it process all chopped trees randomly spawn saplings during the night cycle. Link into worldtime.
 * Check to see if you've got more than a single log on the ground (probably check +5 above for any log) (Toggle)
 * Implement feature to "regrow" missing sections of trees ruined by Enderman/players
 * Allow 'natural' spread of forests over time.
 * Add support for swamp trees to regrow (also maybe w/vines on them)
-* Change start/stop task into a "feature" have it process all chopped trees randomly spawn saplings during the night cycle. Link into worldtime.
-
  

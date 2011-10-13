@@ -24,14 +24,11 @@ public class RTCommand {
 		{
 			if (args.length >= 1)
 			{
-				if(args[0].equalsIgnoreCase("enable")) 
+				if(args[0].equalsIgnoreCase("test")) 
 				{
 					if (sender.hasPermission("realtree.test"))
 					{
-						sender.sendMessage(cmd.toString());
-						sender.sendMessage(commandLabel);
-						sender.sendMessage(Integer.toString(args.length));
-						sender.sendMessage(args[0]);
+						
 					}
 					return true;
 				}
