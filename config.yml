@@ -36,7 +36,23 @@ Fastgrow_Randomtime: 0
 
 #Percent chance of a big tree or redwood tree
 Fastgrow_BigTree: 40
-Fastgrow_RedWood: 40
+Fastgrow_Redwood: 40
 
 #Should we drop saplings if the tree can't grow?
 Fastgrow_DropFailedTrees: false
+
+#Overgrow options
+Overgrow_Enabled: true
+
+Overgrow_Chopped_Trees: true
+Overgrow_Burned_Trees: true
+
+#Number of extra saplings created
+Extra_Trees: 3
+
+#Min and Max growth radius for the new saplings. For best results, Min Radius should always be 
+#greater than or equal to 3. Saplings that appear any closer than that may not grow depending on
+#the tree type and biome.
+
+Min_Growth_Radius: 3
+Max_Growth_Radius: 8

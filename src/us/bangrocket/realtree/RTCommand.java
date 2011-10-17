@@ -28,9 +28,52 @@ public class RTCommand {
 				{
 					if (sender.hasPermission("realtree.test"))
 					{
-						
+						plugin.output("Whammy-whoozle!", sender);
 					}
 					return true;
+				}
+
+				if ((args[0].equalsIgnoreCase("enable")) || (args[0].equalsIgnoreCase("e")))
+				{
+					if ((sender.hasPermission("realtree.toggle")) || (sender.isOp()))
+					{
+						sender.sendMessage(prefix + ChatColor.GREEN + "RealTree plugin enabled!");
+						if (!(plugin.getConfig().isRTEnabled()))
+							plugin.getConfig().setRTEnabled(true);
+						return true;
+					}
+					sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				}
+
+				if ((args[0].equalsIgnoreCase("disable"))  || (args[0].equalsIgnoreCase("d")))  
+				{
+
+					if ((sender.hasPermission("realtree.toggle")) || (sender.isOp()))
+					{
+						sender.sendMessage(prefix + ChatColor.RED + "RealTree plugin disabled!");
+						if ((plugin.getConfig().isRTEnabled()))
+							plugin.getConfig().setRTEnabled(false);
+						return true;
+					}
+					sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+					return true;
+				}
+				
+				if ((args[0].equalsIgnoreCase("reload"))  || (args[0].equalsIgnoreCase("r")))  
+				{
+					if ((sender.hasPermission("realtree.reload")) || sender.isOp())
+					{
+						if (plugin.getConfig().isLFConfig())
+						{
+							sender.sendMessage(prefix + ChatColor.GRAY + "LivingForest config reloaded.");
+						}
+						else
+						{
+							sender.sendMessage(prefix + ChatColor.GRAY + "RealTree config reloaded.");
+						}
+						plugin.getConfig().readConfig();
+						return true;
+					}
 				}
 			}
 			else
@@ -150,6 +193,7 @@ public class RTCommand {
 									{
 										plugin.getPermMan().disableLFPlayer(args[1]);
 										sender.sendMessage(prefix + ChatColor.GRAY + "Realtree disabled for player: " + args[1]);
+										plugin.getServer().getPlayer(args[1]).sendMessage(prefix + ChatColor.GRAY + "Realtree disabled for you by: " + sender.getName());
 										return true;
 									}
 									sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
@@ -162,6 +206,7 @@ public class RTCommand {
 									{
 										plugin.getPermMan().enableLFPlayer(args[1]);
 										sender.sendMessage(prefix + ChatColor.GRAY + "Realtree enabled for player: " + args[1]);
+										plugin.getServer().getPlayer(args[1]).sendMessage(prefix + ChatColor.GRAY + "Realtree enabled for you by: " + sender.getName());
 										return true;
 									}
 									sender.sendMessage(prefix + ChatColor.RED + "You do not have permission to use this command!");

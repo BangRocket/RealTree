@@ -46,6 +46,15 @@ public class RTConfig
 	private int FGRandtime = 30;
 	private int FGBigTree = 40;
 	private int FGRedwood = 40;
+	
+	//Overgrow varibles
+	private boolean OGEnabled = true;
+	private boolean OGChopped = true;
+	private boolean OGBurned = true;
+	
+	private int OGExtraTrees = 3;
+	private int OGminRadius = 3;
+	private int OGmaxRadius = 8;
 
 	public void moveFiles(){
 		plugin.getDataFolder().mkdir();
@@ -131,6 +140,25 @@ public class RTConfig
 		
 		creativeMode = config.getBoolean("Creative_Mode", creativeMode);
 		protectBeforeSap = config.getBoolean("Protect_Before_Replant", protectBeforeSap);
+		
+		//Fastgrow varibles
+		FGEnabled = config.getBoolean("Fastgrow_Enabled", FGEnabled);
+		FGDropFailSap = config.getBoolean("Fastgrow_DropFailedTrees",FGDropFailSap);
+		
+		FGBasetime = config.getInt("Fastgrow_Basetime", FGBasetime);
+		FGRandtime = config.getInt("Fastgrow_Randomtime", FGRandtime);
+		FGBigTree = config.getInt("Fastgrow_BigTree", FGBigTree);
+		FGRedwood = config.getInt("Fastgrow_Redwood", FGRedwood);
+		
+		//Overgrow varibles
+		OGEnabled = config.getBoolean("Overgrow_Enabled", OGEnabled);
+		OGChopped = config.getBoolean("Overgrow_Chopped_Trees", OGChopped);
+		OGBurned = config.getBoolean("Overgrow_Burned_Trees", OGBurned);
+		
+		setOGExtraTrees(config.getInt("Extra_Trees", getOGExtraTrees()));
+		setOGminRadius(config.getInt("Min_Growth_Radius", getOGminRadius()));
+		setOGmaxRadius(config.getInt("Max_Growth_Radius", getOGmaxRadius()));
+		
 	}
 	else
 	{
@@ -149,8 +177,25 @@ public class RTConfig
 
 		delayTime = config.getInt("Living.Replant.Delay", delayTime);
 		protectTime = config.getInt("Living.Replant.ProtectTime", protectTime);
+
+		//Fastgrow varibles
+		FGEnabled = config.getBoolean("Living.FastGrowEnabled", FGEnabled);
+		FGDropFailSap = config.getBoolean("Living.Fastgrow.DropFailedTrees",FGDropFailSap);
 		
-		//TODO -- add support for overgrowth and fast grow
+		FGBasetime = config.getInt("Living.FastGrow.Basetime", FGBasetime);
+		FGRandtime = config.getInt("Living.FastGrow.Randomtime", FGRandtime);
+		FGBigTree = config.getInt("Living.FastGrow.ChanceOfBigTree", FGBigTree);
+		FGRedwood = config.getInt("Living.FastGrow.ChanceOfRedWood", FGRedwood);
+		
+		//Overgrow varibles
+		OGEnabled = config.getBoolean("Living.Replant.OverGrowthMode", OGEnabled);
+		OGChopped = config.getBoolean("Living.Replant.OverGrowth.OverGrowChoppedTrees", OGChopped);
+		OGBurned = config.getBoolean("Living.Replant.OverGrowth.OverGrowBurnedTrees", OGBurned);
+		
+		setOGExtraTrees(config.getInt("Living.Replant.OverGrowth.NumberOfExtraTrees", getOGExtraTrees()));
+		
+		setOGminRadius(config.getInt("Living.Replant.OverGrowth.MinGrowthRadius", getOGminRadius()));
+		setOGmaxRadius(config.getInt("Living.Replant.OverGrowth.MaxGrowthRadius", getOGmaxRadius()));
 	}
 }
 
@@ -353,5 +398,29 @@ public class RTConfig
 	public int getFGRedwood()
 	{
 		return FGRedwood;
+	}
+
+	public int getOGminRadius() {
+		return OGminRadius;
+	}
+
+	public void setOGminRadius(int oGminRadius) {
+		OGminRadius = oGminRadius;
+	}
+
+	public int getOGmaxRadius() {
+		return OGmaxRadius;
+	}
+
+	public void setOGmaxRadius(int oGmaxRadius) {
+		OGmaxRadius = oGmaxRadius;
+	}
+
+	public int getOGExtraTrees() {
+		return OGExtraTrees;
+	}
+
+	public void setOGExtraTrees(int oGExtraTrees) {
+		OGExtraTrees = oGExtraTrees;
 	}
 }

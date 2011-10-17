@@ -33,9 +33,7 @@ public class RTBlockListener extends BlockListener{
     			//kick out of the loop unless we've got access to work in creative mode
         		if ((player.getGameMode().equals(GameMode.CREATIVE)) && !(plugin.getConfig().getcreativeMode()))
         		{
-        			//DEBUGGERY
-        			//return;
-        			//DEBUGGERY
+        			return;
         		}
         		
 				//block is broken! Now lets see if this block was on a piece of dirt...

@@ -1,10 +1,10 @@
 package us.bangrocket.realtree;
 
 import org.bukkit.Material;
-//import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+
 
 public class RTTaskMan
 {
@@ -84,7 +84,7 @@ public class RTTaskMan
 	public void startReplantTask(final BlockState originalState)
 	{
 	
-		BlockState currentState = originalState;
+		final BlockState currentState = originalState;
 		currentState.update();
 		
 		final Block block = currentState.getBlock();
@@ -97,13 +97,8 @@ public class RTTaskMan
 				public void run()
 				{	    										
 					plugin.output("Block replant end " + plugin.getXYZ(block));
-					
-					
-					//DEBUGGERY
-					
-					plugin.RTOG.cuboidtest(block);
-											
-					//DEBUGGERY
+				
+					plugin.getOvergrow().startOvergrow(originalState);
 					
 					if((block.getType().equals(Material.AIR)) || (block.getType().equals(Material.FIRE))) //just incase it was on fire
 					{ 
@@ -140,5 +135,4 @@ public class RTTaskMan
 				}
 			},plugin.getConfig().getProtectTime()*20);
 	}
-	
 }

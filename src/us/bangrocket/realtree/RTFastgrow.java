@@ -69,7 +69,7 @@ public class RTFastgrow extends BlockListener
 		}
 	}
 
-	public static TreeType getTree(int data){
+	public TreeType getTree(int data){
 		switch (data){
 		case 0:
 			if (!(((int)(Math.random() * 100)) <= plugin.getConfig().getFGBigTree()))
@@ -97,5 +97,27 @@ public class RTFastgrow extends BlockListener
 		return TreeType.TREE;
 	}
 
+	public void startFastGrow(final Block block)
+	{
+		final int randtime = (int)(Math.random()*plugin.getConfig().getFGRandtime()+plugin.getConfig().getFGBasetime());
+
+		final World world = block.getWorld();
+		final TreeType treetype = plugin.getFastgrow().getTree(block.getData());
+		final ItemStack istack = new ItemStack(Material.SAPLING, 1 , (short) 0 , block.getData());
+
+		plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin,
+				new Runnable()
+		{
+			public void run()
+			{	
+				if (!world.generateTree(block.getLocation(), treetype))
+				{
+					block.setType(Material.AIR);
+					world.dropItemNaturally(block.getLocation(), istack);
+				}
+			}
+
+		},randtime*20);
+	}
 	
 }

@@ -16,17 +16,18 @@ x Port over LF commands
 x Check for creative mode, add toggle for it. (Disabled by default) (Check for server and then player gamemode)
 x Strip config read/write into own separate class
 x Write code to read/use LF's users.yml file
+x Examine and verify functionality of over-growth feature, implement it 
+x Implement FastGrow (toggle)
+x Implement user.yml checks
+* Notify player when op has changed their RT settings
 
 / Create simple format for configuration options
 / Write console/commands with mind to how the LF commands are set up
-/ Implement FastGrow (toggle)
-/ Implement user.yml checks
 
+
+* Disable op-access to RT if permissions plugin is in use. (toggle)
 * Give FG permissions
-* Notify player when op has changed their RT settings
 * Create RT-specific permissions
-* Examine and verify functionality of over-growth feature, implement it 
-
 * Implement non-permission user file (Basically, you're going to create a separate yml (or dat?) file to act
 	as a "fake" BukkitPermissions plugin. It will act a little like the users.yml, except it will essentally
 	track any player that joins (probably give this functionality back to users.yml) and assign them the 
@@ -43,3 +44,5 @@ Future Version TODO LIST
 * Allow 'natural' spread of forests over time.
 * Add support for swamp trees to regrow (also maybe w/vines on them)
  
+Known bugs
+* Overgrow occasionally places saplings in locations where objects obstruct growing

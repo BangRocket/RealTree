@@ -31,8 +31,9 @@ public class RealTree extends JavaPlugin{
 	
 	private RTBlockListener _blockListener = new RTBlockListener(this);
 	//private RTPlayerListener _playerListener = new RTPlayerListener(this); //Don't think I need this anymore.
+	
 	private RTFastgrow _fgListener = new RTFastgrow(this);
-	public RTOvergrow RTOG = new RTOvergrow(this);
+	private RTOvergrow _RTOverGrow = new RTOvergrow(this);
 	
 	private RTCommand _commander = new RTCommand(this);
 	private RTTaskMan _taskman = new RTTaskMan(this);
@@ -63,7 +64,7 @@ public class RealTree extends JavaPlugin{
 		
 		//Block registers
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this._blockListener, Event.Priority.High, this);
-		pm.registerEvent(Event.Type.BLOCK_PLACE, this._fgListener, Event.Priority.High, this);
+		pm.registerEvent(Event.Type.BLOCK_PLACE, this.getFastgrow(), Event.Priority.High, this);
 		pm.registerEvent(Event.Type.BLOCK_BURN, this._blockListener, Event.Priority.High, this);
 		
 				
@@ -124,6 +125,20 @@ public class RealTree extends JavaPlugin{
 		return this._config;
 	}
 	
+	public RTOvergrow getOvergrow()
+	{
+		return this._RTOverGrow;
+	}
+
+	public RTFastgrow getFastgrow()
+	{
+		return _fgListener;
+	}
+
+	public void setFastgrow(RTFastgrow _fgListener) {
+		this._fgListener = _fgListener;
+	}
+
 	//output [RealTree] formated text to console
 	public void output(String output)
 	{
