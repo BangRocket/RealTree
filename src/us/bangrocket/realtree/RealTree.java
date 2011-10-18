@@ -28,6 +28,7 @@ public class RealTree extends JavaPlugin{
 	
 	private RTConfig _config =  new RTConfig(this);
 	private RTPermission _permission = new RTPermission(this);
+	private FakePerms _fakeperm = new FakePerms(this);
 	
 	private RTBlockListener _blockListener = new RTBlockListener(this);
 	//private RTPlayerListener _playerListener = new RTPlayerListener(this); //Don't think I need this anymore.
@@ -46,21 +47,33 @@ public class RealTree extends JavaPlugin{
 		
 	public void onEnable()
 	{ 
-				
+
 		PluginManager pm = this.getServer().getPluginManager();
 
-    	pdfFile = getDescription();
-    	
-    	_permission.checkPermissionsManager(getServer());
-    	
-    	//load up our files if they don't exist
+		pdfFile = getDescription();
+
+		//load up our files if they don't exist
 		_config.moveFiles();
 
 		// setup configuration file
 		_config.readConfig();
 
 		// check for the damn user file
-		_permission.checkUserConfig();
+		if (!((_permission.checkUserConfig()) && (_permission.checkPermissionsManager(getServer()))))
+		{
+			if (_config.getUseFakePerms())
+			{
+				//ok, we don't have a LF user file OR any existing permission manager. Time to use FakePerms!
+				output("Permission system not detected, defaulting to FakePerms");
+				_fakeperm.moveUserFile();
+				_fakeperm.readUserFile();
+			}
+			else
+			{
+				output("Permission system not detected, defaulting to OPs");
+			}
+
+		}
 		
 		//Block registers
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this._blockListener, Event.Priority.High, this);
@@ -137,6 +150,11 @@ public class RealTree extends JavaPlugin{
 
 	public void setFastgrow(RTFastgrow _fgListener) {
 		this._fgListener = _fgListener;
+	}
+
+	public FakePerms getFakePerms()
+	{
+		return _fakeperm;
 	}
 
 	//output [RealTree] formated text to console

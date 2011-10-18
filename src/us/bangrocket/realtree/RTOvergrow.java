@@ -21,10 +21,11 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 	//I'd really like this to be a private function, but at this point I don't think it's that big of a deal.
 	public void startOvergrow(BlockState block)
 	{
-		LinkedList<Block> validBlocks = new LinkedList<Block>();	
+		LinkedList<Block> validBlocks = new LinkedList<Block>();
+		LinkedList<Block> placedSaplings = new LinkedList<Block>();
 		Random blockSelect = new Random();
 
-		//placeholder varibles for things that will eventually be in ConfigMan
+		//placeholder variables for things that will eventually be in ConfigMan
 		int minR = plugin.getConfig().getOGminRadius(); 
 		int maxR = plugin.getConfig().getOGmaxRadius(); 
 		int numReplant = plugin.getConfig().getOGExtraTrees();
@@ -86,6 +87,11 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 					{
 						continue;
 					}
+					
+					if (placedSaplings.contains(selBlock))
+					{
+						continue;
+					}
 
 					//Air. (block below, air above?)
 					if (selBlock.getType().equals(Material.AIR))
@@ -111,13 +117,13 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 							//check for growable spots (this includes air above)
 							if (((selBlock.getRelative(BlockFace.DOWN).getType().equals(Material.DIRT)) || 
 									(selBlock.getRelative(BlockFace.DOWN).getType().equals(Material.GRASS)) ||
-									(selBlock.getRelative(BlockFace.DOWN).getType().equals(Material.SNOW)) ||
-									(selBlock.getRelative(BlockFace.DOWN).getType().equals(Material.LONG_GRASS))) && 
+									(selBlock.getRelative(BlockFace.DOWN).getType().equals(Material.SNOW))) && 
 									(selBlock.getRelative(BlockFace.UP).getType().equals(Material.AIR))) 
 							{
 
 								selBlock.setType(Material.SAPLING);
 								selBlock.setData(block.getRawData());
+								placedSaplings.add(selBlock);
 								x++; 
 
 //								if (plugin.getConfig().isFGEnabled())
@@ -126,6 +132,15 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 //									plugin.getFastgrow().startFastGrow(selBlock);
 //								
 //								}
+							}
+							
+							if (selBlock.getRelative(BlockFace.DOWN).getType().equals(Material.LONG_GRASS))
+							{
+								selBlock.getRelative(BlockFace.DOWN).setType(Material.SAPLING);
+								selBlock.getRelative(BlockFace.DOWN).setData(block.getRawData());
+								placedSaplings.add(selBlock.getRelative(BlockFace.DOWN));
+								x++; 
+								
 							}
 						}
 					}
@@ -159,9 +174,25 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 							{
 								if ((selBlock.getRelative(BlockFace.UP, 2).getType().equals(Material.AIR)))
 								{
+									if (selBlock.getType().equals(Material.LONG_GRASS))
+									{
+										selBlock.setType(Material.SAPLING);
+										selBlock.setData(block.getRawData());
+										placedSaplings.add(selBlock);
+										x++;
+									}
+									else
+									{
+										selBlock.getRelative(BlockFace.DOWN).setType(Material.SAPLING);
+										selBlock.getRelative(BlockFace.DOWN).setData(block.getRawData());
+										placedSaplings.add(selBlock.getRelative(BlockFace.DOWN));
+										x++; 
+										
+									}
 
 									selBlock.getRelative(BlockFace.UP).setType(Material.SAPLING);
 									selBlock.getRelative(BlockFace.UP).setData(block.getRawData());
+									placedSaplings.add(selBlock);
 									x++;
 //									
 //									if (plugin.getConfig().isFGEnabled())

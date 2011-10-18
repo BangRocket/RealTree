@@ -16,7 +16,7 @@ public class RTConfig
         plugin = instance;
 	}
 	
-	//config varibles, set to default
+	//config variables, set to default
 	private String textPlanted = "A new sapling will arrive in one moment";
 	private String textProtected = "This sapling is protected for a while."; //matching LF wording
 	private int delayTime = 15; //time in seconds until a new sapling will be planted
@@ -26,6 +26,8 @@ public class RTConfig
 	//private int delayTimeBurn = 10; //time in seconds until a new sapling will be planted after a burn
 	
 	private boolean RTEnabled = true;
+	
+	private boolean useFakePerms = true;
 	
 	private boolean tellUserPlanted = false;
 	private boolean tellUserProtected = true;
@@ -38,7 +40,7 @@ public class RTConfig
 	
 	private boolean isLFConfig = false;
 	
-	//Fastgrow varibles
+	//Fastgrow variables
 	private boolean FGEnabled = true;
 	private boolean FGDropFailSap = false;
 	
@@ -47,7 +49,7 @@ public class RTConfig
 	private int FGBigTree = 40;
 	private int FGRedwood = 40;
 	
-	//Overgrow varibles
+	//Overgrow variables
 	private boolean OGEnabled = true;
 	private boolean OGChopped = true;
 	private boolean OGBurned = true;
@@ -139,9 +141,10 @@ public class RTConfig
 		protectTime = config.getInt("Protect_Time", protectTime);
 		
 		creativeMode = config.getBoolean("Creative_Mode", creativeMode);
+		useFakePerms = config.getBoolean("UseFakePerms", useFakePerms);
 		protectBeforeSap = config.getBoolean("Protect_Before_Replant", protectBeforeSap);
 		
-		//Fastgrow varibles
+		//Fastgrow variables
 		FGEnabled = config.getBoolean("Fastgrow_Enabled", FGEnabled);
 		FGDropFailSap = config.getBoolean("Fastgrow_DropFailedTrees",FGDropFailSap);
 		
@@ -150,7 +153,7 @@ public class RTConfig
 		FGBigTree = config.getInt("Fastgrow_BigTree", FGBigTree);
 		FGRedwood = config.getInt("Fastgrow_Redwood", FGRedwood);
 		
-		//Overgrow varibles
+		//Overgrow variables
 		OGEnabled = config.getBoolean("Overgrow_Enabled", OGEnabled);
 		OGChopped = config.getBoolean("Overgrow_Chopped_Trees", OGChopped);
 		OGBurned = config.getBoolean("Overgrow_Burned_Trees", OGBurned);
@@ -178,7 +181,7 @@ public class RTConfig
 		delayTime = config.getInt("Living.Replant.Delay", delayTime);
 		protectTime = config.getInt("Living.Replant.ProtectTime", protectTime);
 
-		//Fastgrow varibles
+		//Fastgrow variables
 		FGEnabled = config.getBoolean("Living.FastGrowEnabled", FGEnabled);
 		FGDropFailSap = config.getBoolean("Living.Fastgrow.DropFailedTrees",FGDropFailSap);
 		
@@ -187,7 +190,7 @@ public class RTConfig
 		FGBigTree = config.getInt("Living.FastGrow.ChanceOfBigTree", FGBigTree);
 		FGRedwood = config.getInt("Living.FastGrow.ChanceOfRedWood", FGRedwood);
 		
-		//Overgrow varibles
+		//Overgrow variables
 		OGEnabled = config.getBoolean("Living.Replant.OverGrowthMode", OGEnabled);
 		OGChopped = config.getBoolean("Living.Replant.OverGrowth.OverGrowChoppedTrees", OGChopped);
 		OGBurned = config.getBoolean("Living.Replant.OverGrowth.OverGrowBurnedTrees", OGBurned);
@@ -422,5 +425,14 @@ public class RTConfig
 
 	public void setOGExtraTrees(int oGExtraTrees) {
 		OGExtraTrees = oGExtraTrees;
+	}
+
+	public boolean getUseFakePerms() {
+		return useFakePerms;
+	}
+
+	public void setFakePerms(boolean useFakePerms)
+	{
+		this.useFakePerms = useFakePerms;
 	}
 }

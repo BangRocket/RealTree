@@ -1,9 +1,14 @@
 #Real Tree Configuration
 
+
 #Run in creative mode
 #Usually the plugin will disable it's autoplant functionality when player/server is in creative mode
 #this toggle overrides that behavior.
 Creative_Mode: false
+
+#This flag decides if you want to use the internal realtree permission system (true) or default to op (false). This will only matter if you are not using
+#a permissions plugin or are using an unsupported permissions plugin.
+UseFakePerms: true
 
 #Delay from log break to the sapling being planted (in seconds) 
 Plant_Delay: 5

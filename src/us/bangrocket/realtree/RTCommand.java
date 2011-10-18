@@ -26,7 +26,7 @@ public class RTCommand {
 			{
 				if(args[0].equalsIgnoreCase("test")) 
 				{
-					if (sender.hasPermission("realtree.test"))
+					if ((sender.hasPermission("realtree.test")) || (plugin.getFakePerms().hasFakePerms(sender.getName(),"realtree.test")))
 					{
 						plugin.output("Whammy-whoozle!", sender);
 					}
@@ -75,6 +75,17 @@ public class RTCommand {
 						return true;
 					}
 				}
+				
+				if ((args[0].equalsIgnoreCase("addPerm")))
+				{
+					if ((sender.hasPermission("realtree.test")) || (plugin.getFakePerms().hasFakePerms(sender.getName(),"realtree.test")))
+						{
+							//error checking please!
+							plugin.getFakePerms().giveFakePerms(args[1], args[2]);
+							return true;
+						}
+					return true;
+				}	
 			}
 			else
 			{

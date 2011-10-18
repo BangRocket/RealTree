@@ -45,4 +45,5 @@ Future Version TODO LIST
 * Add support for swamp trees to regrow (also maybe w/vines on them)
  
 Known bugs
-* Overgrow occasionally places saplings in locations where objects obstruct growing
+X Overgrow occasionally places saplings in locations where objects obstruct growing
+X overgrow places saplings on top of long grass blocks

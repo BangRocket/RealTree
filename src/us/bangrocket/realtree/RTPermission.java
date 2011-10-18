@@ -10,8 +10,6 @@ import org.bukkit.util.config.Configuration;
 // Also, this is where I handle LivingForest's user file. I hate this file, but I'm forcing myself to implement
 // the functionality so I have full backward compatability. 
 
-// The functionality for my own non-permissions user solution is/will be found in the RTConfig class.
-
 public class RTPermission
 {
 	public static RealTree plugin; 
@@ -22,31 +20,32 @@ public class RTPermission
 	}
 	
 	public boolean userFileLoaded = false;
-	public boolean usingPermissions = true;
+	public boolean usingPermissionsBukkit = false;
 	
 	private Configuration users = null;
 	
-	public void checkPermissionsManager(Server server)
+	public boolean checkPermissionsManager(Server server)
 	{		
 		Plugin permPlugin = server.getPluginManager().getPlugin("PermissionsBukkit");
 
 		if (permPlugin != null)
 		{
 			plugin.output("Permission plugin found: PermissionsBukkit");
-			this.usingPermissions = true;
+			this.usingPermissionsBukkit = true;
+			return true;
 		}
-		else
+		else //elseif
 		{
-			plugin.output("Permission system not detected, defaulting to OP");
-			this.usingPermissions = false;
+			this.usingPermissionsBukkit = false;
+			return false;
 		}
    }
 	
-	public void checkUserConfig()
+	public boolean checkUserConfig()
 	  {
 			File userFile = new File(plugin.getDataFolder() + File.separator + "users.yml");
 			
-			if ((userFile.exists()) && (!usingPermissions))
+			if ((userFile.exists()) && (!usingPermissionsBukkit))
 			{
 				plugin.output("LivingForest users.yml file found!");
 				users = new Configuration(new File(plugin.getDataFolder(), "users.yml"));
@@ -58,6 +57,8 @@ public class RTPermission
 				//plugin.output("No File!");
 				userFileLoaded = false;
 			}
+			
+			return userFileLoaded;
 	  }
 
 	public void toggleLFPlayer(String name)
@@ -122,6 +123,3 @@ public class RTPermission
 		return false;
 	}
 }
-
-// player.hasPermission(String);
-//(!this.users.getPlayerCanUse(event.getPlayer().getName()))
