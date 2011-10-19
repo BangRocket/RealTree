@@ -19,20 +19,46 @@ x Write code to read/use LF's users.yml file
 x Examine and verify functionality of over-growth feature, implement it 
 x Implement FastGrow (toggle)
 x Implement user.yml checks
-* Notify player when op has changed their RT settings
+x Notify player when op has changed their RT settings
+x Create simple format for configuration options
 
-/ Create simple format for configuration options
 / Write console/commands with mind to how the LF commands are set up
+	x /realtree enable/disable 						- global on/off for plugin (make sure you safely kill your timers)
+	- /realtree enable/disable <player/"me"> 		- disable plugin for specific player/self (permission based)
+	- /realtree giveperm <player> <permission> 		- make sure you check for a valid permission name.
+	- /realtree takeperm <player> <permission> 		- make sure you check for a valid permission name.
+	- /realtree varchange <variable> <new value> 	- make sure you check for valid inputs
+	- /realtree fastgrow 							- globally toggles named feature 
+	- /realtree fastgrow <player/me>				- disable feature for specific player/self (permission based)
+	- /realtree overgrow 							- globally toggles named feature 
+	- /realtree overgrow <player/me>				- disable feature for specific player/self (permission based) 
+	- /realtree replant (burn/chop) 				- globally toggles named feature
+	- /realtree replant (burn/chop) <player/me>		- disable feature for specific player/self (permission based)
+	- /realtree reload (users) 						- reload both if neither is declared
+	* /realtree reload (config) 					- reload both if neither is declared
+	- /realtree fakeperm 							- globally toggles named feature 
 
-
-* Disable op-access to RT if permissions plugin is in use. (toggle)
-* Give FG permissions
-* Create RT-specific permissions
-* Implement non-permission user file (Basically, you're going to create a separate yml (or dat?) file to act
+/ Create RT-specific permissions
+	- realtree.toggle.plugin
+	- realtree.toggle.self
+	- realtree.toggle.all
+	- realtree.reload.users
+	- realtree.reload.config
+	- realtree.config.varichange
+	- realtree.config.fakeperm
+	- realtree.perms
+	
+	
+		
+/ Give FG permissions
+/ Implement non-permission user file (Basically, you're going to create a separate yml (or dat?) file to act
 	as a "fake" BukkitPermissions plugin. It will act a little like the users.yml, except it will essentally
 	track any player that joins (probably give this functionality back to users.yml) and assign them the 
 	predefined RT Permissions. Then I'll just write another function for checking in Perms and be done with
 	the whole damn thing.)
+
+* Disable op-access to RT if permissions plugin is in use. (toggle)
+* Error checking on config variables
 
 
 Future Version TODO LIST
