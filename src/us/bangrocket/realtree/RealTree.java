@@ -28,10 +28,10 @@ public class RealTree extends JavaPlugin{
 	
 	private RTConfig _config =  new RTConfig(this);
 	private RTPermission _permission = new RTPermission(this);
-	private FakePerms _fakeperm = new FakePerms(this);
+	//private FakePerms _fakeperm = new FakePerms(this);
 	
 	private RTBlockListener _blockListener = new RTBlockListener(this);
-	//private RTPlayerListener _playerListener = new RTPlayerListener(this); //Don't think I need this anymore.
+	private RTPlayerListener _playerListener = new RTPlayerListener(this);
 	
 	private RTFastgrow _fgListener = new RTFastgrow(this);
 	private RTOvergrow _RTOverGrow = new RTOvergrow(this);
@@ -53,27 +53,18 @@ public class RealTree extends JavaPlugin{
 		pdfFile = getDescription();
 
 		//load up our files if they don't exist
-		_config.moveFiles();
+		_config.moveFiles("config.yml");
+		_config.moveFiles("users.dat");
 
 		// setup configuration file
 		_config.readConfig();
 
-		// check for the damn user file
-		if (!((_permission.checkUserConfig()) && (_permission.checkPermissionsManager(getServer()))))
-		{
-			if (_config.getUseFakePerms())
-			{
-				//ok, we don't have a LF user file OR any existing permission manager. Time to use FakePerms!
-				output("Permission system not detected, defaulting to FakePerms");
-				_fakeperm.moveUserFile();
-				_fakeperm.readUserFile();
-			}
-			else
-			{
-				output("Permission system not detected, defaulting to OPs");
-			}
+		// check for permssions
+		_permission.checkPermissionsManager(getServer());
+		
+		// check for user file
+		_permission.checkUserConfig();
 
-		}
 		
 		//Block registers
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this._blockListener, Event.Priority.High, this);
@@ -82,7 +73,7 @@ public class RealTree extends JavaPlugin{
 		
 				
 		//Player registers
-		//pm.registerEvent(Event.Type.PLAYER_INTERACT, this._playerListener, Event.Priority.High, this);
+		pm.registerEvent(Event.Type.PLAYER_JOIN, this._playerListener, Event.Priority.High, this);
 
 		//TODO: Future Implementation of cycle growth
 		//TODO: Check to make sure that only one plant type is going at once.
@@ -150,11 +141,6 @@ public class RealTree extends JavaPlugin{
 
 	public void setFastgrow(RTFastgrow _fgListener) {
 		this._fgListener = _fgListener;
-	}
-
-	public FakePerms getFakePerms()
-	{
-		return _fakeperm;
 	}
 
 	//output [RealTree] formated text to console

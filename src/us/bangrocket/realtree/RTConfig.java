@@ -58,11 +58,13 @@ public class RTConfig
 	private int OGminRadius = 3;
 	private int OGmaxRadius = 8;
 
-	public void moveFiles(){
+	public void moveFiles(String filename)
+	{
 		plugin.getDataFolder().mkdir();
 		plugin.getDataFolder().setWritable(true);
 		plugin.getDataFolder().setExecutable(true);
-		extractFile("config.yml");
+		//extractFile("config.yml");
+		extractFile(filename);
 	}
 
 	//Taken and modified from iCon (and then taken and modified from hawox's treeplanter)

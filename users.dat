@@ -1,7 +1,3 @@
-users:
-    stairmaster401:
-        permissions:
-            realtree:
-                test: true
-        groups:
-        - default
+User:
+
+user:

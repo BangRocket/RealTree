@@ -209,5 +209,6 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 			}
 		}
 		validBlocks.clear();
+		placedSaplings.clear();
 	}
 }

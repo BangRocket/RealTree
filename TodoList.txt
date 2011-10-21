@@ -21,12 +21,10 @@ x Implement FastGrow (toggle)
 x Implement user.yml checks
 x Notify player when op has changed their RT settings
 x Create simple format for configuration options
+x Implement something like the users file
 
 / Write console/commands with mind to how the LF commands are set up
-	x /realtree enable/disable 						- global on/off for plugin (make sure you safely kill your timers)
-	- /realtree enable/disable <player/"me"> 		- disable plugin for specific player/self (permission based)
-	- /realtree giveperm <player> <permission> 		- make sure you check for a valid permission name.
-	- /realtree takeperm <player> <permission> 		- make sure you check for a valid permission name.
+	* /realtree enable/disable 						- global on/off for plugin (make sure you safely kill your timers)
 	- /realtree varchange <variable> <new value> 	- make sure you check for valid inputs
 	- /realtree fastgrow 							- globally toggles named feature 
 	- /realtree fastgrow <player/me>				- disable feature for specific player/self (permission based)
@@ -34,32 +32,25 @@ x Create simple format for configuration options
 	- /realtree overgrow <player/me>				- disable feature for specific player/self (permission based) 
 	- /realtree replant (burn/chop) 				- globally toggles named feature
 	- /realtree replant (burn/chop) <player/me>		- disable feature for specific player/self (permission based)
-	- /realtree reload (users) 						- reload both if neither is declared
-	* /realtree reload (config) 					- reload both if neither is declared
-	- /realtree fakeperm 							- globally toggles named feature 
+	* /realtree reload								- reload 
 
 / Create RT-specific permissions
 	- realtree.toggle.plugin
 	- realtree.toggle.self
 	- realtree.toggle.all
-	- realtree.reload.users
-	- realtree.reload.config
+	- realtree.config.reload
 	- realtree.config.varichange
-	- realtree.config.fakeperm
-	- realtree.perms
 	
-	
+	These are for internal uses only
+	- realtree.replant.chop
+	- realtree.replant.burn
+	- realtree.fastgrow
+	- realtree.overgrow
 		
-/ Give FG permissions
-/ Implement non-permission user file (Basically, you're going to create a separate yml (or dat?) file to act
-	as a "fake" BukkitPermissions plugin. It will act a little like the users.yml, except it will essentally
-	track any player that joins (probably give this functionality back to users.yml) and assign them the 
-	predefined RT Permissions. Then I'll just write another function for checking in Perms and be done with
-	the whole damn thing.)
+/ Use FG permissions
 
-* Disable op-access to RT if permissions plugin is in use. (toggle)
 * Error checking on config variables
-
+* verify that auto/replant work on snow biomes
 
 Future Version TODO LIST
 * Add a debug mode with a bunch of output information.

@@ -42,7 +42,7 @@ public class RTBlockListener extends BlockListener{
     			if((blockUnder.getType() ==  Material.DIRT)  ||  (blockUnder.getType() ==  Material.GRASS))
     			{
     				//on grass here so lets plant the sapling! wooooo!
-    				if (true)//(player.hasPermission("livingforest.replant.chopped")) //TODO: User file permissions/RT perms
+    				if ((player.hasPermission("realtree.replant.chopped") || player.hasPermission("realtree.replant")) || plugin.getPermMan().isUserAllowed(player.getName()))
     				{
     					
     					if (plugin.getConfig().getcycleReplant())

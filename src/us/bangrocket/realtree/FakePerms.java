@@ -108,7 +108,6 @@ public class FakePerms
 	  
 	  public boolean giveFakePerms(String name, String permission)
 	  {
-		  //error checking (for player name/accepted permissions)
 		  if (userFileLoaded)
 		  {
 			 userPerms.setProperty("users." + name + ".permissions." + permission, true);
@@ -116,4 +115,15 @@ public class FakePerms
 		  }
 		  return false;
 	  }
+	  
+	  public boolean takeFakePerms(String name, String permission)
+	  {
+		  if (userFileLoaded)
+		  {
+			 userPerms.setProperty("users." + name + ".permissions." + permission, false);
+			 userPerms.save();
+		  }
+		  return false;
+	  }
+	  
 }

@@ -20,11 +20,12 @@ public class RTPermission
 	}
 	
 	public boolean userFileLoaded = false;
+	public boolean enabledPermissions =  false;
 	public boolean usingPermissionsBukkit = false;
 	
 	private Configuration users = null;
 	
-	public boolean checkPermissionsManager(Server server)
+	public void checkPermissionsManager(Server server)
 	{		
 		Plugin permPlugin = server.getPluginManager().getPlugin("PermissionsBukkit");
 
@@ -32,30 +33,33 @@ public class RTPermission
 		{
 			plugin.output("Permission plugin found: PermissionsBukkit");
 			this.usingPermissionsBukkit = true;
-			return true;
+			this.enabledPermissions = true;
 		}
 		else //elseif
 		{
+			plugin.output("Permission system not detected, defaulting to OPs");
 			this.usingPermissionsBukkit = false;
-			return false;
 		}
    }
 	
 	public boolean checkUserConfig()
 	  {
 			File userFile = new File(plugin.getDataFolder() + File.separator + "users.yml");
+			File RTFile = new File(plugin.getDataFolder() + File.separator + "users.dat");
 			
-			if ((userFile.exists()) && (!usingPermissionsBukkit))
+			if ((userFile.exists()) && (!enabledPermissions))
 			{
 				plugin.output("LivingForest users.yml file found!");
 				users = new Configuration(new File(plugin.getDataFolder(), "users.yml"));
 				users.load();	
 				userFileLoaded = true;
 			}
-			else
+			else if ((RTFile.exists()) && (!enabledPermissions))
 			{
-				//plugin.output("No File!");
-				userFileLoaded = false;
+				plugin.output("RealTree users.dat file found!");
+				users = new Configuration(new File(plugin.getDataFolder(), "users.dat"));
+				users.load();
+				userFileLoaded = true;
 			}
 			
 			return userFileLoaded;
@@ -106,7 +110,11 @@ public class RTPermission
 	{		
 		if (this.userFileLoaded)
 		{
-			if (users.getBoolean("User." + playername + ".CanUse", false))
+			if (users.getBoolean("User." + playername + ".CanUse", true))
+			{
+				return true;
+			}
+			else
 			{
 				return true;
 			}
@@ -121,5 +129,10 @@ public class RTPermission
 			return users.getBoolean("User." + name + ".CanUse", false);
 		}
 		return false;
+	}
+
+	public boolean isPermissionsPluginEnabled()
+	{
+		return enabledPermissions;
 	}
 }
