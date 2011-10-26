@@ -7,9 +7,24 @@ commands:
         usage: /<command>
         aliases:
         - rt
-    livingforest:
-        description: Supported commands from defunct LivingForest plugins
-        usage: /<command>
-        aliases:
-        - lf
+
+permissions:
+    realtree.toggle.*:
+        description: allows user the ability to switch 
+        children:
+            realtree.toggle.self: true
+            realtree.toggle.other: true
+        default: op
+    realtree.toggle.self:
+        description: Allows user to locally toggle the plugin, overgrow, replant, and fastgrow for self.
+        default: true
+    realtree.toggle.other:
+        description: Allows user to locally toggle the plugin, overgrow, replant, and fastgrow for others.
+        default: false
+    realtree.toggle.plugin:
+        description: Allows user to globally toggle the plugin.
+        default: false
+    realtree.config.reload:
+        description: reloads both the config file and user file
+        default: op
         

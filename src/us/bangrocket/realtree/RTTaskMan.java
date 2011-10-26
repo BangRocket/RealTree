@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Player;
 
 
 public class RTTaskMan
@@ -81,13 +82,14 @@ public class RTTaskMan
 		plugin.output("Replant task stopped!");
 	}
 
-	public void startReplantTask(final BlockState originalState)
+	public void startReplantTask(final BlockState originalState, Player p)
 	{
 	
 		final BlockState currentState = originalState;
 		currentState.update();
 		
 		final Block block = currentState.getBlock();
+		final Player player = p;
 		
 		plugin.output("Block replant start at " + plugin.getXYZ(block));
 	
@@ -97,8 +99,12 @@ public class RTTaskMan
 				public void run()
 				{	    										
 					plugin.output("Block replant end " + plugin.getXYZ(block));
-				
-					plugin.getOvergrow().startOvergrow(originalState);
+
+					if (plugin.getConfig().isOGEnabled())
+					{
+						if (plugin.getPermMan().isUserAllowed(player.getName(), "overgrow"))
+							plugin.getOvergrow().startOvergrow(originalState);
+					}
 					
 					if((block.getType().equals(Material.AIR)) || (block.getType().equals(Material.FIRE))) //just incase it was on fire
 					{ 
@@ -119,6 +125,50 @@ public class RTTaskMan
 			},plugin.getConfig().getdelayTime()*20);
 		
 	}
+	
+	public void startReplantTask(final BlockState originalState)
+	{
+	
+		final BlockState currentState = originalState;
+		currentState.update();
+		
+		final Block block = currentState.getBlock();
+		
+		plugin.output("Block replant start at " + plugin.getXYZ(block));
+	
+		plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin,
+			new Runnable()
+			{
+				public void run()
+				{	    										
+					plugin.output("Block replant end " + plugin.getXYZ(block));
+
+					//if (plugin.getConfig().isOGEnabled())
+					//{
+					//	if (plugin.getPermMan().isUserAllowed(player.getName(), "overgrow"))
+					plugin.getOvergrow().startOvergrow(originalState);
+					//}
+					
+					if((block.getType().equals(Material.AIR)) || (block.getType().equals(Material.FIRE))) //just incase it was on fire
+					{ 
+						if ((block.getRelative(BlockFace.DOWN).getType().equals(Material.DIRT)) ||
+								block.getRelative(BlockFace.DOWN).getType().equals(Material.GRASS)) //makes sure the block below is still valid
+						{
+							//to keep the saping fitted to the same tree type we just need to keep the datavalue
+							block.setType(Material.SAPLING);
+							block.setData(originalState.getRawData());
+    					
+							if ((plugin.getConfig().isProtectEnabled()) && (!plugin.getConfig().isProtectBeforeSap()))
+							{
+								plugin.getTaskMan().startProtectTask(block);
+							}
+						}
+					}
+				}
+			},plugin.getConfig().getdelayTime()*20);
+		
+	}
+	
 	public void startProtectTask(final Block block)
 	{
 				

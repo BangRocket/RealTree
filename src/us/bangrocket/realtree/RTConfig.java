@@ -437,4 +437,8 @@ public class RTConfig
 	{
 		this.useFakePerms = useFakePerms;
 	}
+
+	public boolean isOGEnabled() {
+		return OGEnabled;
+	}
 }

@@ -42,7 +42,7 @@ public class RTBlockListener extends BlockListener{
     			if((blockUnder.getType() ==  Material.DIRT)  ||  (blockUnder.getType() ==  Material.GRASS))
     			{
     				//on grass here so lets plant the sapling! wooooo!
-    				if ((player.hasPermission("realtree.replant.chopped") || player.hasPermission("realtree.replant")) || plugin.getPermMan().isUserAllowed(player.getName()))
+    				if (plugin.getPermMan().isUserAllowed(player.getName(), "replant"))
     				{
     					
     					if (plugin.getConfig().getcycleReplant())
@@ -51,7 +51,7 @@ public class RTBlockListener extends BlockListener{
     					}
     					else
     					{
-    						plugin.getTaskMan().startReplantTask(block.getState());
+    						plugin.getTaskMan().startReplantTask(block.getState(), player);
     					}
 	    				
     					if (plugin.getConfig().isProtectEnabled() && (plugin.getConfig().isProtectBeforeSap()))
@@ -111,7 +111,7 @@ public class RTBlockListener extends BlockListener{
 		
 		if(block.getType() == Material.LOG)
 		{ 
-			if(plugin.isEnabled() == true)
+			if(plugin.isEnabled() && plugin.getConfig().isReplantOnBurn())
 			{
 				//block is broken! Now lets see if this block was on a piece of dirt...
 				Block block_under_me = block.getRelative(BlockFace.DOWN);
@@ -119,7 +119,6 @@ public class RTBlockListener extends BlockListener{
 				{
 					
 					//since i'm using blockstates, its a bit important that I do this first. 
-					//TODO: Stop being lazy and fix this.
 					plugin.getTaskMan().startReplantTask(block.getState());
 					
 					//It will not replant the block if it is not air, so lets help that burning log out

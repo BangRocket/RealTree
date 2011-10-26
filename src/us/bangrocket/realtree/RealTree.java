@@ -28,15 +28,14 @@ public class RealTree extends JavaPlugin{
 	
 	private RTConfig _config =  new RTConfig(this);
 	private RTPermission _permission = new RTPermission(this);
-	//private FakePerms _fakeperm = new FakePerms(this);
-	
+		
 	private RTBlockListener _blockListener = new RTBlockListener(this);
 	private RTPlayerListener _playerListener = new RTPlayerListener(this);
 	
 	private RTFastgrow _fgListener = new RTFastgrow(this);
 	private RTOvergrow _RTOverGrow = new RTOvergrow(this);
 	
-	private RTCommand _commander = new RTCommand(this);
+	private RTNewCommand _commander = new RTNewCommand(this);
 	private RTTaskMan _taskman = new RTTaskMan(this);
 	
 	//saplings awaiting planting

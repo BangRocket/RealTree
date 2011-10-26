@@ -4,9 +4,9 @@ import java.util.logging.Logger;
 
 //import org.bukkit.GameMode;
 //import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
-
 
 public class RTPlayerListener extends PlayerListener
 {
@@ -22,10 +22,10 @@ public class RTPlayerListener extends PlayerListener
 	
 	public void onPlayerJoin (PlayerJoinEvent event)
 	{
-		if (!(plugin.getPermMan().enabledPermissions))
-		{
-			plugin.getPermMan().enableLFPlayer(event.getPlayer().getName());
-		}
+		Player player = event.getPlayer();
+		
+		if (!(plugin.getPermMan().isPlayerUser(player.getName())))
+			plugin.getPermMan().enablePlayer(player.getName());
 	}
 	
 //	public void onPlayerGameModeChange(PlayerGameModeChangeEvent event)

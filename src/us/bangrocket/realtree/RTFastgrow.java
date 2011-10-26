@@ -23,49 +23,53 @@ public class RTFastgrow extends BlockListener
 
 	public void onBlockPlace(BlockPlaceEvent event)
 	{
-		if ((!plugin.getConfig().isFGEnabled()) || (!plugin.getConfig().isRTEnabled()))
-			return;
-		
-		if (!(event.getPlayer().hasPermission("livingforest.fastgrow.use") || !(event.getPlayer().hasPermission("realtree.fastgrow.enabled"))))
-			return;
-		
-		if (plugin.getPermMan().userFileLoaded)
-		{
-			if (!(plugin.getPermMan().isUserAllowed(event.getPlayer().getName())))
-				return;
-		}
+//		if ((!plugin.getConfig().isFGEnabled()) || (!plugin.getConfig().isRTEnabled()))
+//			return;
+//		
+//		if (!(event.getPlayer().hasPermission("livingforest.fastgrow.use") || !(event.getPlayer().hasPermission("realtree.fastgrow.enabled"))))
+//			return;
+//		
+//		if (plugin.getPermMan().userFileLoaded)
+//		{
+//			if (!(plugin.getPermMan().isUserAllowed(event.getPlayer().getName())))
+//				return;
+//		}
 		
 		//BR- replaced all TypeID references with getType(). Reads better IMO.
 		if (event.getBlock().getType() == Material.SAPLING)
 		{
-			final int randtime = (int)(Math.random()*plugin.getConfig().getFGRandtime()+plugin.getConfig().getFGBasetime());
-			
-			final Block block = event.getBlock();
-			final TreeType treetype = getTree(block.getData());
-			final World world = event.getPlayer().getWorld();
-			
-			//removed the second itemstack and set this one up to also support the different kind of saplings.
-			final ItemStack istack = new ItemStack(Material.SAPLING, 1 , (short) 0 , block.getData());
-		
-			//changed this to an Async task because I think multiple should be able to run at once and
-			//also because it matchs most of my other scheduled tasks.
-			event.getPlayer().getServer().getScheduler().scheduleAsyncDelayedTask(plugin,
-			new Runnable()
+			if ((plugin.getConfig().isFGEnabled()) && (plugin.getConfig().isRTEnabled()) && ((plugin.getPermMan().isUserAllowed(event.getPlayer().getName()))))
 			{
-				public void run()
-				{	
-					//plugin.output("fastgrow activity");
-					if (block.getType().equals(Material.SAPLING))
-					{
-						block.setType(Material.AIR);
-						if (!world.generateTree(block.getLocation(), treetype))
-						{
-							world.dropItemNaturally(block.getLocation(), istack);
-						}
-					}
 
-				}
-			},randtime*20);
+				final int randtime = (int)(Math.random()*plugin.getConfig().getFGRandtime()+plugin.getConfig().getFGBasetime());
+
+				final Block block = event.getBlock();
+				final TreeType treetype = getTree(block.getData());
+				final World world = event.getPlayer().getWorld();
+
+				//removed the second itemstack and set this one up to also support the different kind of saplings.
+				final ItemStack istack = new ItemStack(Material.SAPLING, 1 , (short) 0 , block.getData());
+
+				//changed this to an Async task because I think multiple should be able to run at once and
+				//also because it matchs most of my other scheduled tasks.
+				event.getPlayer().getServer().getScheduler().scheduleAsyncDelayedTask(plugin,
+						new Runnable()
+				{
+					public void run()
+					{	
+						//plugin.output("fastgrow activity");
+						if (block.getType().equals(Material.SAPLING))
+						{
+							block.setType(Material.AIR);
+							if (!world.generateTree(block.getLocation(), treetype))
+							{
+								world.dropItemNaturally(block.getLocation(), istack);
+							}
+						}
+
+					}
+				},randtime*20);
+			}
 		}
 	}
 

@@ -6,10 +6,6 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.config.Configuration;
 
-// This is here in the off chance that I need to implement some other random-ass Permissions plugin. 
-// Also, this is where I handle LivingForest's user file. I hate this file, but I'm forcing myself to implement
-// the functionality so I have full backward compatability. 
-
 public class RTPermission
 {
 	public static RealTree plugin; 
@@ -18,7 +14,7 @@ public class RTPermission
 	{
         plugin = instance;
 	}
-	
+
 	public boolean userFileLoaded = false;
 	public boolean enabledPermissions =  false;
 	public boolean usingPermissionsBukkit = false;
@@ -47,89 +43,165 @@ public class RTPermission
 			File userFile = new File(plugin.getDataFolder() + File.separator + "users.yml");
 			File RTFile = new File(plugin.getDataFolder() + File.separator + "users.dat");
 			
-			if ((userFile.exists()) && (!enabledPermissions))
+			if ((userFile.exists()))
 			{
-				plugin.output("LivingForest users.yml file found!");
+				plugin.output("LivingForest users.yml file loaded!");
 				users = new Configuration(new File(plugin.getDataFolder(), "users.yml"));
-				users.load();	
+				users.load();
 				userFileLoaded = true;
 			}
-			else if ((RTFile.exists()) && (!enabledPermissions))
+			else if ((RTFile.exists()))
 			{
-				plugin.output("RealTree users.dat file found!");
+				plugin.output("RealTree users.dat file loaded!");
 				users = new Configuration(new File(plugin.getDataFolder(), "users.dat"));
 				users.load();
 				userFileLoaded = true;
 			}
 			
+			
 			return userFileLoaded;
 	  }
 
-	public void toggleLFPlayer(String name)
+	public void togglePlayer(String name, String perm)
 	{
 		if (this.userFileLoaded)
 		{
+			if (users.getBoolean("RT." + name + "." + perm, false))
+			{
+				users.setProperty("User." + name + "." + perm, false);
+			}
+			else
+			{
+				users.setProperty("User." + name + "." + perm, true);
+			}
+
+			users.save();
+		}
+	}
+
+	public void disablePlayer(String name)
+	{
+		if (this.userFileLoaded)
+		{
+			//users.setProperty("User." + name + ".CanUse", false);
+			
+			users.setProperty("RT." + name + ".RealTree", false);
+			
+			users.setProperty("RT." + name + ".overgrow", false);
+			users.setProperty("RT." + name + ".fastgrow", false);
+			users.setProperty("RT." + name + ".replant", false);
+
+			users.save();
+		}
+	}
+
+	public void enablePlayer(String name)
+	{
+		if (this.userFileLoaded)
+		{
+			plugin.output("Registering new player: " + name);
+			
+			//note the lower-case user. separates RT and LF functionality in the userfile
+			users.setProperty("RT." + name + ".registered", true);
+			
+			if (plugin.getConfig().isProtectEnabled())
+			{
+				users.setProperty("RT." + name + ".replant", true);
+			}
+			else
+			{
+				users.setProperty("RT." + name + ".replant", false);
+			}
+			
+			if (plugin.getConfig().isOGEnabled())
+			{
+				users.setProperty("RT." + name + ".overgrow", true);
+			}
+			else
+			{
+				users.setProperty("RT." + name + ".overgrow", false);
+			}
+			
+			if (plugin.getConfig().isFGEnabled())
+			{
+				users.setProperty("RT." + name + ".fastgrow", true);
+			}
+			else
+			{
+				users.setProperty("RT." + name + ".fastgrow", false);
+			}
+
 			if (users.getBoolean("User." + name + ".CanUse", false))
 			{
-				users.setProperty("User." + name + "CanUse", false);
+				users.setProperty("RT." + name + ".RealTree", true);
+			}
+			else if (plugin.getConfig().isRTEnabled())
+			{
+				users.setProperty("RT." + name + ".RealTree", true);
+				//lets make sure we maintain this line from LF. It should never come again, though
+				users.setProperty("User." + name + ".CanUse", true);
 			}
 			else
 			{
-				users.setProperty("User." + name + "CanUse", true);
+				users.setProperty("RT." + name + ".RealTree", false);
 			}
-
-			if (!this.isPlayerLFUser(name))
-				users.setProperty("User." + name + ".Storedname", name);
+			
 			users.save();
 		}
 	}
 
-	public void disableLFPlayer(String name)
+	public boolean isPlayerUser(String playername)
+	{	
+		boolean tempBool = false;
+		
+		if (this.userFileLoaded)
+		{
+			tempBool = users.getBoolean("RT." + playername + ".registered", false);
+		}
+		
+		return tempBool;
+	}
+	
+	public void disablePerm(String name, String perm)
 	{
 		if (this.userFileLoaded)
 		{
-			users.setProperty("User." + name + ".CanUse", false);
-			if (!this.isPlayerLFUser(name))
-				users.setProperty("User." + name + ".Storedname", name);
+			users.setProperty("RT." + name + "." + perm, false);
+
 			users.save();
 		}
 	}
-
-	public void enableLFPlayer(String name)
+	
+	public void enablePerm(String name, String perm)
 	{
 		if (this.userFileLoaded)
 		{
-			users.setProperty("User." + name + ".CanUse", true);
-			if (!this.isPlayerLFUser(name))
-				users.setProperty("User." + name + ".Storedname", name);
+			
+			users.setProperty("RT." + name + "." + perm, true);
+
 			users.save();
 		}
 	}
 
-	public boolean isPlayerLFUser(String playername)
-	{		
-		if (this.userFileLoaded)
-		{
-			if (users.getBoolean("User." + playername + ".CanUse", true))
-			{
-				return true;
-			}
-			else
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 
 	public boolean isUserAllowed(String name)
 	{
 		if (this.userFileLoaded)
 		{
-			return users.getBoolean("User." + name + ".CanUse", false);
+			return users.getBoolean("RT." + name + ".RealTree", false);
 		}
 		return false;
 	}
+
+	public boolean isUserAllowed(String name, String perm)
+	{
+		if (this.userFileLoaded)
+		{
+			return users.getBoolean("RT." + name + "." + perm, false);
+		}
+		return false;
+	}
+	
 
 	public boolean isPermissionsPluginEnabled()
 	{

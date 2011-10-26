@@ -40,6 +40,7 @@ public class RTCommand {
         {  
         	permissionlist.add(s);  
         }  
+        
 		if (plugin.getPermMan().isPermissionsPluginEnabled())
 		{
 			//RealTree Commands
@@ -110,14 +111,16 @@ public class RTCommand {
 					{
 						if ((sender.hasPermission("realtree.toggle.self")))// || sender.isOp())
 						{
-							if (sender.hasPermission("realtree.overgrow"))
-							{
-								// enable
-							}
-							else
-							{
-								// disable
-							}
+							plugin.getPermMan().togglePlayer(sender.getName(), "overgrow");
+							return true;
+//							if (plugin.getPermMan().isUserAllowed(sender.getName(),"overgrow"))
+//							{
+//								plugin.output("test", sender, ChatColor.GREEN);//disable
+//							}
+//							else
+//							{
+//								plugin.output("test", sender, ChatColor.RED);//enable
+//							}
 						}
 						sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
 						return true;
@@ -309,12 +312,12 @@ public class RTCommand {
 						{
 							if (plugin.getPermMan().isUserAllowed(sender.getName()))
 							{
-								plugin.getPermMan().disableLFPlayer(sender.getName());
+								plugin.getPermMan().disablePlayer(sender.getName());
 								sender.sendMessage(prefix + ChatColor.RED + "Replant disabled for you.");
 							}
 							else
 							{
-								plugin.getPermMan().enableLFPlayer(sender.getName());
+								plugin.getPermMan().enablePlayer(sender.getName());
 								sender.sendMessage(prefix + ChatColor.GREEN + "Replant enabled for you.");	
 							}
 							return true;
@@ -330,20 +333,20 @@ public class RTCommand {
 			{
 				if ((args[0].equalsIgnoreCase("replant"))  || (args[0].equalsIgnoreCase("rp")))  
 				{
-					if (plugin.getPermMan().isPlayerLFUser(args[1]))
+					if (plugin.getPermMan().isPlayerUser(args[1]))
 					{	
 						if (sender.isOp())
 						{
 							if (plugin.getPermMan().isUserAllowed(sender.getName()))
 							{								
-								plugin.getPermMan().disableLFPlayer(args[1]);
+								plugin.getPermMan().disablePlayer(args[1]);
 								sender.sendMessage(prefix + ChatColor.RED + "Realtree disabled for player: " + args[1]);
 								plugin.getServer().getPlayer(args[1]).sendMessage(prefix + "Realtree disabled for you by: " + sender.getName());
 								return true;
 							}
 							else
 							{
-								plugin.getPermMan().enableLFPlayer(args[1]);
+								plugin.getPermMan().enablePlayer(args[1]);
 								sender.sendMessage(prefix + ChatColor.GREEN + "Realtree enabled for player: " + args[1]);
 								plugin.getServer().getPlayer(args[1]).sendMessage(prefix + "Realtree enabled for you by: " + sender.getName());
 								return true;
