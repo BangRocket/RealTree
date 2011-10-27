@@ -114,7 +114,7 @@ public class RTTaskMan
 							//to keep the saping fitted to the same tree type we just need to keep the datavalue
 							block.setType(Material.SAPLING);
 							block.setData(originalState.getRawData());
-    					
+							
 							if ((plugin.getConfig().isProtectEnabled()) && (!plugin.getConfig().isProtectBeforeSap()))
 							{
 								plugin.getTaskMan().startProtectTask(block);
@@ -143,12 +143,9 @@ public class RTTaskMan
 				{	    										
 					plugin.output("Block replant end " + plugin.getXYZ(block));
 
-					//if (plugin.getConfig().isOGEnabled())
-					//{
-					//	if (plugin.getPermMan().isUserAllowed(player.getName(), "overgrow"))
 					plugin.getOvergrow().startOvergrow(originalState);
-					//}
-					
+
+
 					if((block.getType().equals(Material.AIR)) || (block.getType().equals(Material.FIRE))) //just incase it was on fire
 					{ 
 						if ((block.getRelative(BlockFace.DOWN).getType().equals(Material.DIRT)) ||
@@ -157,6 +154,11 @@ public class RTTaskMan
 							//to keep the saping fitted to the same tree type we just need to keep the datavalue
 							block.setType(Material.SAPLING);
 							block.setData(originalState.getRawData());
+							
+//							if (plugin.getConfig().isFGEnabled())
+//							{
+//								plugin.getFastgrow().startFastGrow(block);
+//							}
     					
 							if ((plugin.getConfig().isProtectEnabled()) && (!plugin.getConfig().isProtectBeforeSap()))
 							{

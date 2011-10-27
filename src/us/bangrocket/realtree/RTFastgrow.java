@@ -38,7 +38,11 @@ public class RTFastgrow extends BlockListener
 		//BR- replaced all TypeID references with getType(). Reads better IMO.
 		if (event.getBlock().getType() == Material.SAPLING)
 		{
-			if ((plugin.getConfig().isFGEnabled()) && (plugin.getConfig().isRTEnabled()) && ((plugin.getPermMan().isUserAllowed(event.getPlayer().getName()))))
+			plugin.output("Fg: " + Boolean.toString(plugin.getConfig().isFGEnabled()));
+			plugin.output("RT: " + Boolean.toString(plugin.getConfig().isRTEnabled()));
+			plugin.output("Perm: " + Boolean.toString(plugin.getPermMan().isUserAllowed(event.getPlayer().getName(), "fastgrow")));
+			
+			if ((plugin.getConfig().isFGEnabled()) && (plugin.getConfig().isRTEnabled()) && (plugin.getPermMan().isUserAllowed(event.getPlayer().getName(), "fastgrow")))
 			{
 
 				final int randtime = (int)(Math.random()*plugin.getConfig().getFGRandtime()+plugin.getConfig().getFGBasetime());
@@ -63,7 +67,8 @@ public class RTFastgrow extends BlockListener
 							block.setType(Material.AIR);
 							if (!world.generateTree(block.getLocation(), treetype))
 							{
-								world.dropItemNaturally(block.getLocation(), istack);
+								if (plugin.getConfig().getFGDropFailSap())
+									world.dropItemNaturally(block.getLocation(), istack);
 							}
 						}
 
@@ -103,6 +108,8 @@ public class RTFastgrow extends BlockListener
 
 	public void startFastGrow(final Block block)
 	{
+
+		plugin.output("starting non-placement FG");
 		final int randtime = (int)(Math.random()*plugin.getConfig().getFGRandtime()+plugin.getConfig().getFGBasetime());
 
 		final World world = block.getWorld();
@@ -116,8 +123,10 @@ public class RTFastgrow extends BlockListener
 			{	
 				if (!world.generateTree(block.getLocation(), treetype))
 				{
-					block.setType(Material.AIR);
-					world.dropItemNaturally(block.getLocation(), istack);
+					if (plugin.getConfig().getFGDropFailSap())
+						plugin.output("FG fail.");
+						//block.setType(Material.AIR);
+						world.dropItemNaturally(block.getLocation(), istack);
 				}
 			}
 

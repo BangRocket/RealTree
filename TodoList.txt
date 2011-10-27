@@ -22,30 +22,12 @@ x Implement user.yml checks
 x Notify player when op has changed their RT settings
 x Create simple format for configuration options
 x Implement something like the users file
-
-/ Write console/commands with mind to how the LF commands are set up
-	* /realtree enable/disable 						- global on/off for plugin (make sure you safely kill your timers)
-	- /realtree varchange <variable> <new value> 	- make sure you check for valid inputs
-	- /realtree fastgrow 							- globally toggles named feature 
-	- /realtree fastgrow <player/me>				- disable feature for specific player/self (permission based)
-	- /realtree overgrow 							- globally toggles named feature 
-	- /realtree overgrow <player/me>				- disable feature for specific player/self (permission based) 
-	- /realtree replant (burn/chop) 				- globally toggles named feature
-	- /realtree replant (burn/chop) <player/me>		- disable feature for specific player/self (permission based)
-	* /realtree reload								- reload 
-
-/ Create RT-specific permissions
+x Write console/commands with mind to how the LF commands are set up
+x Create RT-specific permissions
 	- realtree.toggle.plugin
 	- realtree.toggle.self
 	- realtree.toggle.all
 	- realtree.config.reload
-	- realtree.config.varichange
-	
-	These are for internal uses only
-	- realtree.replant.chop
-	- realtree.replant.burn
-	- realtree.fastgrow
-	- realtree.overgrow
 		
 / Use FG permissions
 
@@ -64,3 +46,5 @@ Future Version TODO LIST
 Known bugs
 X Overgrow occasionally places saplings in locations where objects obstruct growing
 X overgrow places saplings on top of long grass blocks
+* fastgrow and overgrow don't seem to play well together.
+* fastgrow doesn't seem to be consistent (sometimes it seems to work, other times it doesn't. I think it's related to the timer value being 0, maybe)

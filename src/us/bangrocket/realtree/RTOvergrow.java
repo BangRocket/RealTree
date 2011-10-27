@@ -194,13 +194,11 @@ public class RTOvergrow  //TODO: make this a standalone body of code like Fastgr
 									selBlock.getRelative(BlockFace.UP).setData(block.getRawData());
 									placedSaplings.add(selBlock);
 									x++;
-//									
-//									if (plugin.getConfig().isFGEnabled())
-//									{
-//										//TODO: Fix, implement this.
-//										plugin.getFastgrow().startFastGrow(selBlock);
-//									
-//									}
+									
+									if (plugin.getConfig().isFGEnabled())
+									{
+										plugin.getFastgrow().startFastGrow(selBlock);
+									}
 								}
 							}
 						}

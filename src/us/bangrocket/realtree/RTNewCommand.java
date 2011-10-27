@@ -17,7 +17,7 @@ public class RTNewCommand
 	{
 		String prefix = "[" + plugin.pdfFile.getName() + "] ";
 
-		plugin.output(Integer.toString(args.length));
+		//plugin.output(Integer.toString(args.length));
 		
 		if ((cmd.getName().equalsIgnoreCase("rt")) || (cmd.getName().equalsIgnoreCase("realtree")))
 		{
@@ -50,10 +50,10 @@ public class RTNewCommand
 				}
 
 				//DISABLE Command
-				if ((sender.isOp()) || (args[0].equalsIgnoreCase("disable"))  || (args[0].equalsIgnoreCase("d")))  
+				if ((args[0].equalsIgnoreCase("disable"))  || (args[0].equalsIgnoreCase("d")))  
 				{
 
-					if ((sender.hasPermission("realtree.toggle.plugin"))) 
+					if ((sender.isOp()) || (sender.hasPermission("realtree.toggle.plugin"))) 
 					{
 						sender.sendMessage(prefix + ChatColor.RED + "RealTree plugin disabled globally!");
 						if ((plugin.getConfig().isRTEnabled()))
@@ -65,7 +65,7 @@ public class RTNewCommand
 				}
 
 				//RELOAD command
-				if ((sender.isOp()) || (args[0].equalsIgnoreCase("reload"))  || (args[0].equalsIgnoreCase("r")))  
+				if ((args[0].equalsIgnoreCase("reload"))  || (args[0].equalsIgnoreCase("r")))  
 				{
 					if ((sender.isOp()) || (sender.hasPermission("realtree.config.reload"))) 
 					{
